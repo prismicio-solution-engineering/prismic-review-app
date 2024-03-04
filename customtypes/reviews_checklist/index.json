@@ -1,0 +1,107 @@
+{
+  "id": "reviews_checklist",
+  "label": "Reviews checklist",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "criteria": {
+        "type": "Group",
+        "config": {
+          "label": "Criteria",
+          "fields": {
+            "topic": {
+              "type": "Select",
+              "config": {
+                "label": "Topic",
+                "placeholder": "",
+                "options": [
+                  "Slices and types",
+                  "Queries",
+                  "Templating into React/Vue",
+                  "Routing",
+                  "Content relationship",
+                  "Assets",
+                  "Dev experience",
+                  "Editor experience"
+                ]
+              }
+            },
+            "name": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Name",
+                "placeholder": "",
+                "allowTargetBlank": true,
+                "single": "heading3"
+              }
+            },
+            "comment_next": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Comment Next",
+                "placeholder": "Comment for Next apps",
+                "allowTargetBlank": true,
+                "multi": "paragraph,preformatted,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl,heading3"
+              }
+            },
+            "comment_nuxt": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Comment Nuxt",
+                "placeholder": "Comment for Nuxt apps",
+                "allowTargetBlank": true,
+                "multi": "paragraph,preformatted,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl,heading3"
+              }
+            },
+            "comment_sveltkit": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Comment Sveltkit",
+                "placeholder": "Comment for SveltKit apps",
+                "allowTargetBlank": true,
+                "multi": "paragraph,preformatted,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+              }
+            },
+            "priority": {
+              "type": "Select",
+              "config": {
+                "label": "Priority",
+                "placeholder": "Criteria priority",
+                "options": ["High", "Medium", "Low"]
+              }
+            },
+            "is_slice_library": {
+              "type": "Boolean",
+              "config": {
+                "label": "Is Slice library",
+                "default_value": false,
+                "placeholder_true": "true",
+                "placeholder_false": "false"
+              }
+            },
+            "is_full_project": {
+              "type": "Boolean",
+              "config": {
+                "label": "Is Full Project",
+                "default_value": false,
+                "placeholder_true": "true",
+                "placeholder_false": "false"
+              }
+            },
+            "review_helper": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Review helper",
+                "placeholder": "Helper for SE team",
+                "allowTargetBlank": true,
+                "multi": "paragraph,strong,em,hyperlink,image,embed,list-item,o-list-item,preformatted"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

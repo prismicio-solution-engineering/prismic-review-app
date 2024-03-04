@@ -1,0 +1,48 @@
+{
+  "id": "navigation",
+  "label": "Navigation",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "logo": {
+        "type": "Image",
+        "config": {
+          "label": "Logo",
+          "constraint": {},
+          "thumbnails": []
+        }
+      }
+    },
+    "Header": {
+      "slices1": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "menu_item": {
+              "type": "SharedSlice"
+            }
+          }
+        }
+      }
+    },
+    "Search": {
+      "search_bar_placeholder": {
+        "type": "Text",
+        "config": {
+          "label": "Search bar placeholder",
+          "placeholder": ""
+        }
+      },
+      "search_result_page_title": {
+        "type": "Text",
+        "config": {
+          "label": "Search result page title",
+          "placeholder": ""
+        }
+      }
+    }
+  }
+}
