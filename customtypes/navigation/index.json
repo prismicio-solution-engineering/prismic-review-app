@@ -5,7 +5,7 @@
   "repeatable": false,
   "status": true,
   "json": {
-    "Main": {
+    "Header": {
       "logo": {
         "type": "Image",
         "config": {
@@ -13,9 +13,7 @@
           "constraint": {},
           "thumbnails": []
         }
-      }
-    },
-    "Header": {
+      },
       "slices1": {
         "type": "Slices",
         "fieldset": "Slice Zone",
@@ -25,22 +23,6 @@
               "type": "SharedSlice"
             }
           }
-        }
-      }
-    },
-    "Search": {
-      "search_bar_placeholder": {
-        "type": "Text",
-        "config": {
-          "label": "Search bar placeholder",
-          "placeholder": ""
-        }
-      },
-      "search_result_page_title": {
-        "type": "Text",
-        "config": {
-          "label": "Search result page title",
-          "placeholder": ""
         }
       }
     }

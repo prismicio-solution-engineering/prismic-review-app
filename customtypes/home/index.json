@@ -10,47 +10,7 @@
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
-          "choices": {
-            "partnership_tiers": {
-              "type": "SharedSlice"
-            },
-            "features": {
-              "type": "SharedSlice"
-            },
-            "testimonials": {
-              "type": "SharedSlice"
-            },
-            "call_to_action": {
-              "type": "SharedSlice"
-            },
-            "timeline": {
-              "type": "SharedSlice"
-            },
-            "text": {
-              "type": "SharedSlice"
-            },
-            "text_section": {
-              "type": "SharedSlice"
-            },
-            "check_list": {
-              "type": "SharedSlice"
-            },
-            "accordion_section": {
-              "type": "SharedSlice"
-            },
-            "news_list": {
-              "type": "SharedSlice"
-            },
-            "form_section": {
-              "type": "SharedSlice"
-            },
-            "hero_banner": {
-              "type": "SharedSlice"
-            },
-            "featured_partners": {
-              "type": "SharedSlice"
-            }
-          }
+          "choices": {}
         }
       }
     },
