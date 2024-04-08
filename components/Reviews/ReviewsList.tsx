@@ -49,10 +49,10 @@ interface Criterion {
 
 export const ReviewsList = ({
   agencyId,
-  criteria,
+  prismicCriteria,
 }: {
   agencyId?: number | null;
-  criteria: Criterion[];
+  prismicCriteria?: Criterion[];
 }) => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [notification, setNotification] = useState({ type: "", message: "" });
@@ -106,12 +106,12 @@ export const ReviewsList = ({
   };
 
   return (
-    <div className="flex flex-col my-16 max-w-screen-2xl">
+    <div className="flex flex-col my-16">
       {/* {openDrawer && ( */}
         <Drawer openDrawer={openDrawer} onOpenDrawer={setOpenDrawer}>
           {reviewToEdit && (
             <Feedback
-              criteria={criteria} // Ensure you have the criteria data available
+              prismicCriteria={prismicCriteria} // Ensure you have the criteria data available, Rename into Checklist or prismicCriteria
               reviewType={reviewToEdit.review_type}
               initialReview={reviewToEdit} // Prop to pass the existing review data
               initialReviewCriteria={reviewCriteriaToEdit}
@@ -126,7 +126,7 @@ export const ReviewsList = ({
         <Notification type={notification.type} message={notification.message} />
       )}
       <div className="overflow-x-auto rounded-lg border">
-        <table className="min-w-full divide-y divide-gray-300">
+        <table className="table-auto min-w-full divide-y divide-gray-300">
           <thead className="bg-gray-50">
             <tr>
               <th
@@ -139,7 +139,7 @@ export const ReviewsList = ({
                 scope="col"
                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
-                {agencyId ? "Agency" : "Comments"}
+              Agency
               </th>
               <th
                 scope="col"
@@ -186,7 +186,7 @@ export const ReviewsList = ({
                   {review.id}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap overflow-ellipsis text-sm text-gray-900">
-                  {agencyId ? review.overall_comments : review.agencies.name}
+                  {review.agencies.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   {review.review_type}

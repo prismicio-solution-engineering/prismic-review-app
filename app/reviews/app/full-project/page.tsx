@@ -13,7 +13,7 @@ export default async function Page() {
   return (
     <>
       <Header navigation={navigation} />
-      <Feedback criteria={checklist?.data?.criteria} reviewType="full" />
+      <Feedback prismicCriteria={checklist?.data?.criteria} reviewType="full" />
     </>
   );
 }

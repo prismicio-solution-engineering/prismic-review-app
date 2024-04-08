@@ -27,10 +27,10 @@ interface Criterion {
 }
 export const AgencyDashboard = ({
   agencyData,
-  criteria,
+  prismicCriteria,
 }: {
   agencyData: Agency;
-  criteria: Criterion[];
+  prismicCriteria: Criterion[];
 }) => {
   return (
     <div className="flex flex-col my-16 max-w-screen-xl mx-auto">
@@ -42,7 +42,7 @@ export const AgencyDashboard = ({
         onSubmit={updateAgency}
         isLoading={false}
       />
-      <ReviewsList agencyId={agencyData.id} criteria={criteria} />
+      <ReviewsList agencyId={agencyData.id} prismicCriteria={prismicCriteria} />
     </div>
   );
 };

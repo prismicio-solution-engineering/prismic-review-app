@@ -19,10 +19,10 @@ export default async function Page({
   return (
     <>
       <Header navigation={navigation} />
-      <div>
+      <div className="max-w-screen-2xl mx-auto">
         <AgencyDashboard
           agencyData={agencyData}
-          criteria={checklist.data.criteria}
+          prismicCriteria={checklist.data.criteria}
         />
       </div>
     </>

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { addAgency, getAgencies } from "@/utils/agencies";
 import { AgencyForm } from "./AgencyForm";
+import { Button } from "../Button";
 
 interface Agency {
   id: number;
@@ -27,7 +28,7 @@ export const AgenciesList = () => {
       </h3>
       <AgencyForm onSubmit={addAgency} isLoading={false} />
       <div className="overflow-x-auto rounded-lg border">
-        <table className="min-w-full divide-y divide-gray-300">
+        <table className="table-auto min-w-full divide-y divide-gray-300">
           <thead className="bg-gray-50">
             <tr>
               <th
@@ -51,7 +52,9 @@ export const AgenciesList = () => {
                   {agency.id}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {agency.name}
+                  <Button variant="link" href={`/agencies/${agency.id}`}>
+                    {agency.name}
+                  </Button>
                 </td>
               </tr>
             ))}

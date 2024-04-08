@@ -55,34 +55,18 @@ export const ReviewCriteriaForm: React.FC<ReviewCriteriaFormProps> = ({
     string,
     { evaluation: string; comments: string }
   >();
-  initialReviewCriteria.forEach((criterion) => {
+  initialReviewCriteria?.forEach((criterion) => {
     initialCriteriaEvaluationsMap.set(criterion.criteria_name, {
       evaluation: criterion.evaluation,
       comments: criterion.comments,
     });
   });
 
-  // const [criteriaEvaluations, setCriteriaEvaluations] = useState<Map<string, CriterionEvaluation>>(new Map());
   const [criteriaEvaluations, setCriteriaEvaluations] = initialReviewCriteria
     ? useState<Map<string, { evaluation: string; comments: string }>>(
         initialCriteriaEvaluationsMap
       )
     : useState<Map<string, CriterionEvaluation>>(new Map());
-
-  // const handleEvaluationChange = (
-  //   criterionName: string,
-  //   evaluation: string
-  // ) => {
-  //   const updatedEvaluations = new Map(criteriaEvaluations);
-  //   const currentCriterion = updatedEvaluations.get(criterionName) || {
-  //     criteria_name: criterionName,
-  //     evaluation: "",
-  //     comments: "",
-  //   };
-  //   updatedEvaluations.set(criterionName, { ...currentCriterion, evaluation });
-  //   setCriteriaEvaluations(updatedEvaluations);
-  //   onCriteriaEvaluationChange(updatedEvaluations);
-  // };
 
   const handleEvaluationChange = (
     criterionName: string,
@@ -97,18 +81,6 @@ export const ReviewCriteriaForm: React.FC<ReviewCriteriaFormProps> = ({
     setCriteriaEvaluations(updatedEvaluations);
     onCriteriaEvaluationChange(updatedEvaluations);
   };
-
-  // const handleCommentsChange = (criterionName: string, comments: string) => {
-  //   const updatedEvaluations = new Map(criteriaEvaluations);
-  //   const currentCriterion = updatedEvaluations.get(criterionName) || {
-  //     criteria_name: criterionName,
-  //     evaluation: "N/A",
-  //     comments: "",
-  //   };
-  //   updatedEvaluations.set(criterionName, { ...currentCriterion, comments });
-  //   setCriteriaEvaluations(updatedEvaluations);
-  //   onCriteriaEvaluationChange(updatedEvaluations);
-  // };
 
   const handleCommentsChange = (criterionName: string, comments: string) => {
     const updatedEvaluations = new Map(criteriaEvaluations);
@@ -214,7 +186,10 @@ export const ReviewCriteriaForm: React.FC<ReviewCriteriaFormProps> = ({
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                 <input
                   type="text"
-                  value={criteriaEvaluations.get(prismic.asText(criterion.name))?.comments || ""}
+                  value={
+                    criteriaEvaluations.get(prismic.asText(criterion.name))
+                      ?.comments || ""
+                  }
                   onChange={(e) =>
                     handleCommentsChange(
                       prismic.asText(criterion.name),
