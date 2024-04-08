@@ -26,6 +26,11 @@ interface ReviewSubmissionFormProps {
   onStatusChange: (status: string) => void;
   onIsPassedChange: (isPassed: boolean) => void;
   reviewType: "sample" | "full";
+  initialAgencyId?: number;
+  initialFramework?: string;
+  initialOverallComments?: string;
+  initialStatus?: string;
+  initialIsPassed?: boolean;
 }
 
 export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
@@ -35,22 +40,50 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
   onIsPassedChange,
   onStatusChange,
   reviewType,
+  initialAgencyId,
+  initialFramework, // Default to the first framework if not provided
+  initialOverallComments,
+  initialStatus, // Default to the first status if not provided
+  initialIsPassed,
 }) => {
-  const [isPassed, setIsPassed] = useState<boolean>(false);
-  const [status, setStatus] = useState<string>("");
+  // const [isPassed, setIsPassed] = useState<boolean>(false);
+  // const [status, setStatus] = useState<string>("");
+  // const [agencies, setAgencies] = useState<Agency[]>([]);
+  // const [selectedAgency, setSelectedAgency] = useState<Agency | null>(null);
+  // const [selectedFramework, setSelectedFramework] = useState<string>("");
+  // const [overallComments, setOverallComments] = useState("");
+
+  const [isPassed, setIsPassed] = useState<boolean>(initialIsPassed ? initialIsPassed : false);
+  const [status, setStatus] = useState<string>(initialStatus ? initialStatus : "");
   const [agencies, setAgencies] = useState<Agency[]>([]);
   const [selectedAgency, setSelectedAgency] = useState<Agency | null>(null);
-  const [selectedFramework, setSelectedFramework] = useState<string>("");
-  const [overallComments, setOverallComments] = useState("");
+  const [selectedFramework, setSelectedFramework] = useState<string>(initialFramework ? initialFramework : "");
+  const [overallComments, setOverallComments] = useState<string>(initialOverallComments ? initialOverallComments : "");
+
+  // useEffect(() => {
+  //   const fetchAgencies = async () => {
+  //     const loadedAgencies = await getAgencies();
+  //     setAgencies(loadedAgencies);
+  //   };
+
+  //   fetchAgencies();
+  // }, []);
 
   useEffect(() => {
     const fetchAgencies = async () => {
       const loadedAgencies = await getAgencies();
       setAgencies(loadedAgencies);
+
+      // Find and set the initial agency based on initialAgencyId
+      const initialAgency = loadedAgencies.find(agency => agency.id === initialAgencyId);
+      if (initialAgency) {
+        setSelectedAgency(initialAgency);
+        onAgencySelect(initialAgency.id);
+      }
     };
 
     fetchAgencies();
-  }, []);
+  }, [initialAgencyId, onAgencySelect]);
 
   const handleAgencySelect = async (name: string) => {
     // Check if the agency already exists; if not, add it
@@ -91,22 +124,9 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
     onOverallCommentsChange(value);
   };
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const reviewData = {
-  //     agency: selectedAgency?.name,
-  //     review_type: reviewType,
-  //     framework: selectedFramework,
-  //     overall_comments: overallComments,
-  //     is_passed: isPassed,
-  //     status: status,
-  //   };
-  // };
-
   return (
     <div className="max-w-screen-xl mx-auto my-16">
       <form
-        // onSubmit={handleSubmit}
         className="flex flex-col gap-8 max-w-screen-md"
       >
         <div className="flex flex-row gap-10">
@@ -114,7 +134,6 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
             <Combobox
               as="div"
               value={selectedAgency}
-              // onChange={setSelectedAgency}
               onChange={(agency: string) => handleAgencySelect(agency?.name)}
             >
               <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-base border-silver-light sm:text-sm">
@@ -283,9 +302,6 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
             </div>
           </Switch.Group>
         </div>
-        {/* <Button submit color="black" className="w-fit">
-          Submit Review
-        </Button> */}
       </form>
     </div>
   );
