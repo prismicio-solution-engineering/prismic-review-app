@@ -13,6 +13,7 @@ const baseStyles: clsxT.ClassDictionary = {
 
 const variantStyles: clsxT.ClassDictionary = {
   primary: {
+    custom: "transition duration-500 ease-in-out",
     purple:
       "bg-primary-purple text-white hover:bg-secondary-purple transition duration-500 ease-in-out",
     black:
@@ -21,6 +22,8 @@ const variantStyles: clsxT.ClassDictionary = {
       "bg-white text-slate-900 hover:bg-blue-50 active:bg-blue-200 active:text-slate-600 focus-visible:outline-white transition duration-500 ease-in-out",
   },
   secondary: {
+    custom: "transition duration-500 ease-in-out",
+
     purple:
       "ring-slate-200 hover:ring-slate-300 bg-transparent text-primary-purple border-primary-purple hover:bg-primary-purple hover:text-white transition duration-500 ease-in-out",
     black:
@@ -29,6 +32,7 @@ const variantStyles: clsxT.ClassDictionary = {
       "ring-slate-700 text-white hover:ring-slate-500 active:ring-slate-700 active:text-slate-400 focus-visible:outline-white transition duration-500 ease-in-out",
   },
   link: {
+    custom: "",
     black: "text-gray-darker",
     white: "text-white",
   },
