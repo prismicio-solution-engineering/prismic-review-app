@@ -170,7 +170,7 @@ export const updateReviewCriteria = async (reviewId: number, criteria: ReviewCri
 
   const { error } = await supabase
     .from('review_criteria')
-    .upsert(detailedCriteria, {onConflict: "criteria_name"});
+    .upsert(detailedCriteria, {onConflict: "criteria_name, review_id"});
 
   if (error) {
     console.error('Error editing review criteria:', error);
