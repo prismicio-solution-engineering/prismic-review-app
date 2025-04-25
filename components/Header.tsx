@@ -70,7 +70,7 @@ export default function Header({ navigation }: NavigationDocumentData) {
             />
           )}
         </nav>
-        <Button href="/login" variant="primary" color="black">
+        <Button button href="/login" variant="primary" color="black" disabled>
           Sign in
         </Button>
       </div>

@@ -62,7 +62,7 @@ const ReviewSummary = ({
                 <PrismicRichText field={comment.frameworkComment} />
                 {comment.reviewerComment && (
                   <div>
-                    <b className="">Additional Comment</b>
+                    <p className="font-semibold">Additional Comment</p>
                     <p className="italic">{comment.reviewerComment}</p>
                   </div>
                 )}

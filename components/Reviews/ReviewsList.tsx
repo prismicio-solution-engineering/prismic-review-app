@@ -99,7 +99,7 @@ export const ReviewsList = ({
       });
     } else {
       setNotification({
-        type: "success",
+        type: "error",
         message: "Failed to delete the review.",
       });
     }

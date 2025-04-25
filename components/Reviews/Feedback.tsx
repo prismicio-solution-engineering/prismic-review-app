@@ -13,6 +13,7 @@ import { Button } from "../Button";
 import { PrismicRichText } from "../PrismicRichText";
 import ReviewSummary from "./ReviewSummary";
 import { asText } from "@prismicio/client/richtext";
+import Notification from "../Notification";
 
 interface Agency {
   id: number;
@@ -47,6 +48,7 @@ interface Criterion {
 }
 
 interface CriterionEvaluation {
+  id?: number;
   criteria_name: string;
   evaluation: string;
   comments: string;
@@ -63,6 +65,8 @@ export function Feedback({
   initialReview?: Review;
   initialReviewCriteria?: CriterionEvaluation[];
 }) {
+  const [notification, setNotification] = useState({ type: "", message: "" });
+
   const [selectedAgency, setSelectedAgency] = useState<number | null>(
     initialReview?.agency_id || null
   );
@@ -83,27 +87,31 @@ export function Feedback({
 
   const initialCriteriaEvaluations = new Map<
     string,
-    { evaluation: string; comments: string }
+    { id?: number; evaluation: string; comments: string }
   >();
 
   // Populate the initial state based on initialReviewCriteria
   initialReviewCriteria?.forEach((criterion) => {
     const key = criterion.criteria_name;
-    console.log(`Key: ${key}, Evaluation: ${criterion.evaluation}, Comments: ${criterion.comments}`);
+    // console.log(
+    //   `Key: ${key}, Evaluation: ${criterion.evaluation}, Comments: ${criterion.comments}`
+    // );
     if (key) {
       initialCriteriaEvaluations.set(key, {
-          evaluation: criterion.evaluation,
-          comments: criterion.comments,
+        id: criterion.id,
+        evaluation: criterion.evaluation,
+        comments: criterion.comments,
       });
-  }
+    }
     initialCriteriaEvaluations.set(criterion.name, {
+      id: criterion.id,
       evaluation: criterion.evaluation,
       comments: criterion.comments,
     });
   });
 
   const [criteriaEvaluations, setCriteriaEvaluations] = useState<
-    Map<string, { evaluation: string; comments: string }>
+    Map<string, { id?: number; evaluation: string; comments: string }>
   >(initialCriteriaEvaluations);
 
   // Handle summary comments based on criteriaEvaluations
@@ -153,10 +161,11 @@ export function Feedback({
   useEffect(() => {
     const newCriteriaEvaluations = new Map<
       string,
-      { evaluation: string; comments: string }
+      { id?: number; evaluation: string; comments: string }
     >();
     initialReviewCriteria?.forEach((criterion) => {
       newCriteriaEvaluations.set(criterion.criteria_name, {
+        id: criterion.id,
         evaluation: criterion.evaluation,
         comments: criterion.comments,
       });
@@ -193,15 +202,25 @@ export function Feedback({
         })
       );
 
-      console.log(
-        "Review data",
-        reviewData,
-        "Review form",
-        criteriaSubmissions
-      );
-      await addReviewCriteria(reviewId, criteriaSubmissions);
+      const result = await addReviewCriteria(reviewId, criteriaSubmissions);
+      const { error } = JSON.parse(result);
+
+      if (!error?.message) {
+        setNotification({
+          type: "success",
+          message: "Review and criteria successfully added!",
+        });
+      } else {
+        setNotification({
+          type: "error",
+          message: `Failed to add criteria : ${error.details}`,
+        });
+      }
     } else {
-      alert("Failed to add review");
+      setNotification({
+        type: "error",
+        message: "Failed to add review",
+      });
     }
   };
 
@@ -224,32 +243,62 @@ export function Feedback({
     const updatedReview =
       initialReview && (await updateReview(initialReview.id, reviewData));
 
-    // if updated review and that review has criteria then update them
+    // if updatedReview exist and that review has criteria then update them
     if (updatedReview) {
       // Then, submit the criteria evaluations
       const criteriaSubmissions = Array.from(criteriaEvaluations).map(
-        ([name, { evaluation, comments }]) => ({
+        ([name, { id, evaluation, comments }]) => ({
+          id,
           review_id: updatedReview.id,
           criteria_name: name,
           evaluation,
           comments,
         })
       );
+      console.log("CRITERIA", criteriaSubmissions);
 
-      console.log(
-        "Review data",
-        reviewData,
-        "Review form",
+      // console.log(
+      //   "Review data",
+      //   reviewData,
+      //   "Review form",
+      //   criteriaSubmissions
+      // );
+
+      // Doesn't work
+      // TODO : First check that a review of this type for this agency exists and update it
+      // Same with create, first check that it doesn't exist
+      // await updateReviewCriteria(updatedReview, criteriaSubmissions);
+      const result = await updateReviewCriteria(
+        updatedReview,
         criteriaSubmissions
       );
-      await updateReviewCriteria(updatedReview, criteriaSubmissions);
+
+      const { error } = JSON.parse(result);
+
+      if (!error?.message) {
+        setNotification({
+          type: "success",
+          message: "Review and criteria successfully updated!",
+        });
+      } else {
+        setNotification({
+          type: "error",
+          message: `Failed to update criteria : ${error.details}`,
+        });
+      }
     } else {
-      alert("Failed to add review");
+      setNotification({
+        type: "error",
+        message: "Failed to update review",
+      });
     }
   };
 
   return (
     <div className="max-w-screen-xl mx-auto">
+      {notification.message && (
+        <Notification type={notification.type} message={notification.message} />
+      )}
       <ReviewSubmissionForm
         onAgencySelect={setSelectedAgency}
         onFrameworkSelect={setSelectedFramework}

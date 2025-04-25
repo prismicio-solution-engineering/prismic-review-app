@@ -32,9 +32,9 @@ export const addReview = async (review: Review): Promise<number | null> => {
     console.error('Error adding review:', error);
     return null;
   }
-
   return data[0].id; // Assuming 'id' is the primary key of the inserted review
 };
+
 
 // Read Review
 export const getReviews = async () => {
@@ -96,7 +96,6 @@ export const getReview = async (id: number) => {
     console.error("Error fetching review:", error);
     return null;
   }
-  console.log(review)
   return review;
   ;
 }
@@ -146,20 +145,32 @@ export const deleteReview = async (id: number) => {
 };
 
 // Create Review Criteria
+// export const addReviewCriteria = async (reviewId: number, criteria: ReviewCriteria[]) => {
+//   const detailedCriteria = criteria.map(criterion => ({
+//     ...criterion,
+//     review_id: reviewId, // Ensure each criterion is associated with the review ID
+//   }));
+
+//   const { error } = await supabase
+//     .from('review_criteria')
+//     .insert(detailedCriteria);
+
+//   if (error) {
+//     console.error('Error adding review criteria:', error);
+//   }
+//   return true
+// };
+
 export const addReviewCriteria = async (reviewId: number, criteria: ReviewCriteria[]) => {
+
   const detailedCriteria = criteria.map(criterion => ({
     ...criterion,
     review_id: reviewId, // Ensure each criterion is associated with the review ID
   }));
 
-  const { error } = await supabase
-    .from('review_criteria')
-    .insert(detailedCriteria);
+  const result = await supabase.from("review_criteria").insert(detailedCriteria).select();
 
-  if (error) {
-    console.error('Error adding review criteria:', error);
-  }
-  return true
+  return JSON.stringify(result)
 };
 
 export const updateReviewCriteria = async (reviewId: number, criteria: ReviewCriteria[]) => {
@@ -168,16 +179,25 @@ export const updateReviewCriteria = async (reviewId: number, criteria: ReviewCri
     review_id: reviewId, // Ensure each criterion is associated with the review ID
   }));
 
-  const { error } = await supabase
-    .from('review_criteria')
-    .upsert(detailedCriteria, {onConflict: "criteria_name, review_id"});
+  // const { error } = await supabase
+  //   .from('review_criteria')
+  //   .upsert(detailedCriteria, {onConflict: "criteria_name, review_id"});
 
-  if (error) {
-    console.error('Error editing review criteria:', error);
-  }
+  // if (error) {
+  //   console.error('Error editing review criteria:', error);
+  // }
 
-  return true
+  // return true
+
+  const result = await supabase.from("review_criteria")
+  console.log("details", detailedCriteria)
+  // .update(detailedCriteria)
+  // .eq("id", id)
+  // .select();
+
+  // return JSON.stringify(result)
 };
+
 export const getReviewCriteria = async (reviewId: number) => {
   const { data: criteria, error } = await supabase
     .from("review_criteria")
@@ -188,6 +208,5 @@ export const getReviewCriteria = async (reviewId: number) => {
     console.error("Error fetching review's criteria:", error);
     return [];
   }
-console.log(criteria)
   return criteria;
 };

@@ -53,12 +53,20 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
   // const [selectedFramework, setSelectedFramework] = useState<string>("");
   // const [overallComments, setOverallComments] = useState("");
 
-  const [isPassed, setIsPassed] = useState<boolean>(initialIsPassed ? initialIsPassed : false);
-  const [status, setStatus] = useState<string>(initialStatus ? initialStatus : "");
+  const [isPassed, setIsPassed] = useState<boolean>(
+    initialIsPassed ? initialIsPassed : false
+  );
+  const [status, setStatus] = useState<string>(
+    initialStatus ? initialStatus : ""
+  );
   const [agencies, setAgencies] = useState<Agency[]>([]);
   const [selectedAgency, setSelectedAgency] = useState<Agency | null>(null);
-  const [selectedFramework, setSelectedFramework] = useState<string>(initialFramework ? initialFramework : "");
-  const [overallComments, setOverallComments] = useState<string>(initialOverallComments ? initialOverallComments : "");
+  const [selectedFramework, setSelectedFramework] = useState<string>(
+    initialFramework ? initialFramework : ""
+  );
+  const [overallComments, setOverallComments] = useState<string>(
+    initialOverallComments ? initialOverallComments : ""
+  );
 
   // useEffect(() => {
   //   const fetchAgencies = async () => {
@@ -75,7 +83,9 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
       setAgencies(loadedAgencies);
 
       // Find and set the initial agency based on initialAgencyId
-      const initialAgency = loadedAgencies.find(agency => agency.id === initialAgencyId);
+      const initialAgency = loadedAgencies.find(
+        (agency) => agency.id === initialAgencyId
+      );
       if (initialAgency) {
         setSelectedAgency(initialAgency);
         onAgencySelect(initialAgency.id);
@@ -126,9 +136,7 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
 
   return (
     <div className="max-w-screen-xl mx-auto my-16">
-      <form
-        className="flex flex-col gap-8 max-w-screen-md"
-      >
+      <form className="flex flex-col gap-8 max-w-screen-md">
         <div className="flex flex-row gap-10">
           <div className="relative">
             <Combobox
@@ -136,8 +144,8 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
               value={selectedAgency}
               onChange={(agency: string) => handleAgencySelect(agency?.name)}
             >
+              <Combobox.Label>Agency</Combobox.Label>
               <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-base border-silver-light sm:text-sm">
-                <Combobox.Label>Agency</Combobox.Label>
                 <Combobox.Input
                   as="input"
                   className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-darker focus:ring-0"
@@ -181,8 +189,8 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
               value={selectedFramework}
               onChange={(framework: string) => handleFrameworkSelect(framework)}
             >
+              <Combobox.Label>Framework</Combobox.Label>
               <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-base sm:text-sm border-silver-light">
-                <Combobox.Label>Framework</Combobox.Label>
                 <Combobox.Input
                   as="input"
                   className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
@@ -225,8 +233,8 @@ export const ReviewSubmissionForm: React.FC<ReviewSubmissionFormProps> = ({
               value={status}
               onChange={(value) => handleStatusChange(value)}
             >
+              <Listbox.Label>Status</Listbox.Label>
               <div className="relative w-full cursor-default rounded-lg bg-white text-left shadow-md  border-silver-light sm:text-sm">
-                <Listbox.Label>Status</Listbox.Label>
                 <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm z-10">
                   <span className="block truncate">{status}</span>
                   <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">

@@ -1,3 +1,4 @@
+import { PostgrestError } from "@supabase/supabase-js";
 import { createClient } from "./supabase/client";
 
 interface Agency {
@@ -7,20 +8,10 @@ interface Agency {
 
 const supabase = createClient();
 
-export const addAgency = async (name: string): Promise<Agency | null> => {
-  const { data, error } = await supabase
-    .from("agencies")
-    .insert([{ name }])
-    .single();
+export const addAgency = async (name: string) => {
+  const result = await supabase.from("agencies").insert([{ name }]).single();
 
-  if (error) {
-    console.error("Error adding agency:", error);
-    return null;
-  }
-
-  console.log("Added agency:", data);
-  // return true;
-  return data as Agency;
+  return JSON.stringify(result)
 };
 
 export const updateAgency = async (id: number, updateData: Partial<Agency>) => {

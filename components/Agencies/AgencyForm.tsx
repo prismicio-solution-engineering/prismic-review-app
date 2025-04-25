@@ -1,23 +1,33 @@
 "use client";
 import { useState } from "react";
 import { Button } from "../Button";
+import Notification from "../Notification";
 
 export const AgencyForm = ({ onSubmit, isLoading }) => {
   const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
+  // const [message, setMessage] = useState("");
+  const [notification, setNotification] = useState({ type: "", message: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(""); // Clear previous messages
 
-    const success = await onSubmit(name); // Call the passed onSubmit function
+    const result = await onSubmit(name); // Call the passed onSubmit function
 
-    if (success) {
-      setMessage("Agency successfully added!");
+    const {error} = JSON.parse(result)
+
+    if (!error?.message) {
+      setNotification({
+        type: "success",
+        message: "Agency successfully added!",
+      });
       setName(""); // Reset the name field on successful submission
     } else {
-      setMessage("Failed to add the agency. Please try again.");
+      setNotification({
+        type: "error",
+        message: `Failed to add the agency : ${error.details}`,
+      });
     }
+
   };
 
   return (
@@ -25,6 +35,9 @@ export const AgencyForm = ({ onSubmit, isLoading }) => {
       <h3 className="text-2xl font-sans font-bold text-gray-darker mb-6">
         Add New Agency
       </h3>
+      {notification.message && (
+        <Notification type={notification.type} message={notification.message} />
+      )}
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md flex flex-col gap-6"
@@ -51,7 +64,7 @@ export const AgencyForm = ({ onSubmit, isLoading }) => {
             Add Agency
           </Button>
           </div>
-          {message && <div className="text-sm text-primary-green">{message}</div>}
+          {/* {message && <div className="text-sm text-primary-green">{message}</div>} */}
         </div>
       </form>
     </div>
