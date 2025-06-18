@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import { NavigationDocumentData } from "@/prismicio-types";
+import { NavigationDocument } from "@/prismicio-types";
 import { PrismicNextImage } from "@prismicio/next";
 import { SliceZone } from "@prismicio/react";
 import { components } from "@/slices";
 import { Button } from "./Button";
 
-export default function Header({ navigation }: NavigationDocumentData) {
+export default function Header({ navigation }: {navigation: NavigationDocument}) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -70,9 +70,9 @@ export default function Header({ navigation }: NavigationDocumentData) {
             />
           )}
         </nav>
-        <Button button href="/login" variant="primary" color="black" disabled>
+        {/* <Button button href="/login" variant="primary" color="black" disabled>
           Sign in
-        </Button>
+        </Button> */}
       </div>
 
       {/* Mobile Menu */}

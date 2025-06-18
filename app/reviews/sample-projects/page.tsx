@@ -23,9 +23,6 @@ export default async function Page() {
             <Button color="black" href="/reviews/app/sample-project">
               New Sample Project
             </Button>
-            <Button color="black" href="/reviews/app/full-project">
-              New Full Project
-            </Button>
           </div>
           <ReviewsList prismicCriteria={checklist.data.criteria} />
         </div>

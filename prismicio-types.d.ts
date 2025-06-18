@@ -171,31 +171,213 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
-export type AllDocumentTypes = HomeDocument | NavigationDocument | PageDocument;
-
 /**
- * Primary content in *MenuItem → Primary*
+ * Content for Review criteria category documents
  */
-export interface MenuItemSliceDefaultPrimary {
+interface ReviewCriteriaCategoryDocumentData {
   /**
-   * Label field in *MenuItem → Primary*
+   * Category Name field in *Review criteria category*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: menu_item.primary.label
+   * - **API ID Path**: review_criteria_category.category_name
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  category_name: prismic.KeyTextField;
+}
+
+/**
+ * Review criteria category document from Prismic
+ *
+ * - **API ID**: `review_criteria_category`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ReviewCriteriaCategoryDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithUID<
+    Simplify<ReviewCriteriaCategoryDocumentData>,
+    "review_criteria_category",
+    Lang
+  >;
+
+/**
+ * Item in *Reviews checklist → Criteria*
+ */
+export interface ReviewsChecklistDocumentDataCriteriaItem {
+  /**
+   * Category field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Content Relationship
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_checklist.criteria[].category
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  category: prismic.ContentRelationshipField<"review_criteria_category">;
+
+  /**
+   * Name field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Title
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_checklist.criteria[].name
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  name: prismic.TitleField;
+
+  /**
+   * Comment Next field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Comment for Next apps
+   * - **API ID Path**: reviews_checklist.criteria[].comment_next
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  comment_next: prismic.RichTextField;
+
+  /**
+   * Comment Nuxt field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Comment for Nuxt apps
+   * - **API ID Path**: reviews_checklist.criteria[].comment_nuxt
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  comment_nuxt: prismic.RichTextField;
+
+  /**
+   * Comment Sveltkit field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Comment for SveltKit apps
+   * - **API ID Path**: reviews_checklist.criteria[].comment_sveltkit
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  comment_sveltkit: prismic.RichTextField;
+
+  /**
+   * Priority field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: Criteria priority
+   * - **API ID Path**: reviews_checklist.criteria[].priority
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  priority: prismic.SelectField<"High" | "Medium" | "Low">;
+
+  /**
+   * Is Slice library field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: reviews_checklist.criteria[].is_slice_library
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  is_slice_library: prismic.BooleanField;
+
+  /**
+   * Is Full Project field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Boolean
+   * - **Placeholder**: *None*
+   * - **Default Value**: false
+   * - **API ID Path**: reviews_checklist.criteria[].is_full_project
+   * - **Documentation**: https://prismic.io/docs/field#boolean
+   */
+  is_full_project: prismic.BooleanField;
+
+  /**
+   * Review helper field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: Helper for SE team
+   * - **API ID Path**: reviews_checklist.criteria[].review_helper
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  review_helper: prismic.RichTextField;
+
+  /**
+   * Where to check field in *Reviews checklist → Criteria*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **Default Value**: Code
+   * - **API ID Path**: reviews_checklist.criteria[].where_to_check
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  where_to_check: prismic.SelectField<
+    "Code" | "Slice Machine" | "Website",
+    "filled"
+  >;
+}
+
+/**
+ * Content for Reviews checklist documents
+ */
+interface ReviewsChecklistDocumentData {
+  /**
+   * Criteria field in *Reviews checklist*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: reviews_checklist.criteria[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#group
+   */
+  criteria: prismic.GroupField<
+    Simplify<ReviewsChecklistDocumentDataCriteriaItem>
+  >;
+}
+
+/**
+ * Reviews checklist document from Prismic
+ *
+ * - **API ID**: `reviews_checklist`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/custom-types
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ReviewsChecklistDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<ReviewsChecklistDocumentData>,
+    "reviews_checklist",
+    Lang
+  >;
+
+export type AllDocumentTypes =
+  | HomeDocument
+  | NavigationDocument
+  | PageDocument
+  | ReviewCriteriaCategoryDocument
+  | ReviewsChecklistDocument;
+
+/**
+ * Primary content in *MenuItem → Default → Primary*
+ */
+export interface MenuItemSliceDefaultPrimary {
+  /**
+   * Label field in *MenuItem → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: menu_item.default.primary.label
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   label: prismic.KeyTextField;
 
   /**
-   * Link field in *MenuItem → Primary*
+   * Link field in *MenuItem → Default → Primary*
    *
    * - **Field Type**: Link
    * - **Placeholder**: *None*
-   * - **API ID Path**: menu_item.primary.link
+   * - **API ID Path**: menu_item.default.primary.link
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  link: prismic.LinkField;
+  link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
@@ -212,15 +394,15 @@ export type MenuItemSliceDefault = prismic.SharedSliceVariation<
 >;
 
 /**
- * Primary content in *MenuItem → Primary*
+ * Primary content in *MenuItem → With sub menu → Primary*
  */
 export interface MenuItemSliceWithSubMenuPrimary {
   /**
-   * Label field in *MenuItem → Primary*
+   * Label field in *MenuItem → With sub menu → Primary*
    *
    * - **Field Type**: Text
    * - **Placeholder**: *None*
-   * - **API ID Path**: menu_item.primary.label
+   * - **API ID Path**: menu_item.withSubMenu.primary.label
    * - **Documentation**: https://prismic.io/docs/field#key-text
    */
   label: prismic.KeyTextField;
@@ -248,7 +430,13 @@ export interface MenuItemSliceWithSubMenuItem {
    * - **API ID Path**: menu_item.items[].sub_menu_item_link
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  sub_menu_item_link: prismic.LinkField;
+  sub_menu_item_link: prismic.LinkField<
+    string,
+    string,
+    unknown,
+    prismic.FieldState,
+    never
+  >;
 }
 
 /**
@@ -289,6 +477,17 @@ declare module "@prismicio/client" {
     ): prismic.Client<AllDocumentTypes>;
   }
 
+  interface CreateWriteClient {
+    (
+      repositoryNameOrEndpoint: string,
+      options: prismic.WriteClientConfig,
+    ): prismic.WriteClient<AllDocumentTypes>;
+  }
+
+  interface CreateMigration {
+    (): prismic.Migration<AllDocumentTypes>;
+  }
+
   namespace Content {
     export type {
       HomeDocument,
@@ -300,6 +499,11 @@ declare module "@prismicio/client" {
       PageDocument,
       PageDocumentData,
       PageDocumentDataSlicesSlice,
+      ReviewCriteriaCategoryDocument,
+      ReviewCriteriaCategoryDocumentData,
+      ReviewsChecklistDocument,
+      ReviewsChecklistDocumentData,
+      ReviewsChecklistDocumentDataCriteriaItem,
       AllDocumentTypes,
       MenuItemSlice,
       MenuItemSliceDefaultPrimary,

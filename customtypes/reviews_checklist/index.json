@@ -1,0 +1,111 @@
+{
+  "id": "reviews_checklist",
+  "label": "Reviews checklist",
+  "format": "custom",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "criteria": {
+        "type": "Group",
+        "config": {
+          "label": "Criteria",
+          "fields": {
+            "category": {
+              "type": "Link",
+              "config": {
+                "label": "Category",
+                "select": "document",
+                "customtypes": ["review_criteria_category"]
+              }
+            },
+            "name": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Name",
+                "placeholder": "",
+                "allowTargetBlank": true,
+                "single": "heading3"
+              }
+            },
+            "comment_next": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Comment Next",
+                "placeholder": "Comment for Next apps",
+                "allowTargetBlank": true,
+                "multi": "paragraph,preformatted,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                "labels": ["inline code"]
+              }
+            },
+            "comment_nuxt": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Comment Nuxt",
+                "placeholder": "Comment for Nuxt apps",
+                "allowTargetBlank": true,
+                "multi": "paragraph,preformatted,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                "labels": ["inline code"]
+              }
+            },
+            "comment_sveltkit": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Comment Sveltkit",
+                "placeholder": "Comment for SveltKit apps",
+                "allowTargetBlank": true,
+                "multi": "paragraph,preformatted,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl",
+                "labels": ["inline code"]
+              }
+            },
+            "priority": {
+              "type": "Select",
+              "config": {
+                "label": "Priority",
+                "placeholder": "Criteria priority",
+                "options": ["High", "Medium", "Low"]
+              }
+            },
+            "is_slice_library": {
+              "type": "Boolean",
+              "config": {
+                "label": "Is Slice library",
+                "default_value": false,
+                "placeholder_true": "true",
+                "placeholder_false": "false"
+              }
+            },
+            "is_full_project": {
+              "type": "Boolean",
+              "config": {
+                "label": "Is Full Project",
+                "default_value": false,
+                "placeholder_true": "true",
+                "placeholder_false": "false"
+              }
+            },
+            "review_helper": {
+              "type": "StructuredText",
+              "config": {
+                "label": "Review helper",
+                "placeholder": "Helper for SE team",
+                "allowTargetBlank": true,
+                "multi": "paragraph,strong,em,hyperlink,image,embed,list-item,o-list-item,preformatted",
+                "labels": ["inline code"]
+              }
+            },
+            "where_to_check": {
+              "type": "Select",
+              "config": {
+                "label": "Where to check",
+                "placeholder": "",
+                "options": ["Code", "Slice Machine", "Website"],
+                "default_value": "Code"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

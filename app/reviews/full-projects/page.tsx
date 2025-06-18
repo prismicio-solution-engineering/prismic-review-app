@@ -20,9 +20,6 @@ export default async function Page() {
         <AgenciesList />
         <div className="max-w-screen-xl mx-auto">
           <div className="flex flex-row gap-6">
-            <Button color="black" href="/reviews/app/sample-project">
-              New Sample Project
-            </Button>
             <Button color="black" href="/reviews/app/full-project">
               New Full Project
             </Button>
